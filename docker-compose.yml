@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  activemq:
+    image: apache/activemq-artemis:latest-alpine
+    ports:
+      - "61616:61616"  # JMS
+      - "8161:8161"    # Web Console
+    environment:
+      ARTEMIS_USER: artemis
+      ARTEMIS_PASSWORD: simetraehcapa
+      ARTEMIS_MIN_MEMORY: "512M"
+      ARTEMIS_MAX_MEMORY: "1024M"
+
+  client-service:
+    build:
+      context: ./client-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_ARTEMIS_HOST: activemq
+    depends_on:
+      - activemq
+
+  personal-data-service:
+    build:
+      context: ./personal-data-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_ARTEMIS_HOST: activemq
+    depends_on:
+      - activemq
+
+  contact-service:
+    build:
+      context: ./contact-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_ARTEMIS_HOST: activemq
+    depends_on:
+      - activemq
+
+  financial-service:
+    build:
+      context: ./financial-service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_ARTEMIS_HOST: activemq
+    depends_on:
+      - activemq
+
+  storage-service:
+    build:
+      context: ./storage-service
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_ARTEMIS_HOST: activemq
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - activemq 

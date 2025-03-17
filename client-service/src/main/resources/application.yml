@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: client-service
+  
+  artemis:
+    mode: native
+    host: localhost
+    port: 61616
+    user: artemis
+    password: simetraehcapa
+    
+logging:
+  level:
+    com.example.client: DEBUG
+    org.springframework: INFO 

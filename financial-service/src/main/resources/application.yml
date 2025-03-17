@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: financial-service
+  
+  artemis:
+    mode: native
+    host: localhost
+    port: 61616
+    user: artemis
+    password: simetraehcapa
+    
+logging:
+  level:
+    com.example.financial: DEBUG
+    org.springframework: INFO 
